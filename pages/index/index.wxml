@@ -1,13 +1,35 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+<!--view容器 -->
+<view class="section section_gap swiper">
+<!--swiper组件 -->
+  <swiper indicator-dots="{{indicatorDots}}" vertical="{{vertical}}"
+          autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <!--block控制循环从data里面的imgUrls里面读取类，这个名字和data里面的要一致 -->
+      <block wx:for-items="{{imgUrls}}">
+      <!--每次循环创建一个swiper-item组件-->
+          <swiper-item>
+          <!--组件里面创建image组件，路径读取类里面的img属性-->
+              <image src="{{item.img}}" class="slide-image" style="width:100%;"/>
+          </swiper-item>
+      </block>
+  </swiper>
+</view>
+<!--音乐播放组件-->
+<!-- <audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{musicSrc}}" action="{{action}}" 
+bindtimeupdate="bindTimeUpdate" controls loop style="margin-left: 10%;margin-top: 10px;"></audio> -->
+<audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio" controls loop></audio>
+<!--进度条及时间-->
+<view class="section section_gap">
+  <view class="body-view">
+      <!--当前时间-->
+      <view class="minTime">
+          <text class="minMin">{{minMin}}</text>
+      </view>
+      <!--进度条-->
+        <slider class="slider" value="{{sliderValue}}" bindchange="sliderChange" min="{{minTime}}" max="{{maxTime}}"/>
+      <!--最大时间-->
+      <view class="maxTime" text="{{minMin}}">
+          <text class="maxMin">{{maxMin}}</text>
+      </view>
   </view>
 </view>
